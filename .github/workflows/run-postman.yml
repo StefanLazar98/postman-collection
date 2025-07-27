@@ -1,0 +1,31 @@
+name: Run Postman Collections
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  run_postman:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # or any stable version
+
+    - name: Install Newman
+      run: npm install -g newman
+
+    - name: Run Collection 1
+      run: newman run path/to/collection1.json
+
+    - name: Run Collection 2
+      run: newman run path/to/collection2.json
+
+    - name: Run Collection 3
+      run: newman run path/to/collection3.json

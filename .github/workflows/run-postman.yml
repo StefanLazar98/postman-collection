@@ -31,7 +31,6 @@ jobs:
       - name: Run Postman collection
         run: |
           mkdir -p reports
-          cd postman-collection-master
           COLLECTION_NAME="${{ matrix.collection-file }}"
           # Sanitize filename for report outputs (replace spaces, commas, dots)
           REPORT_NAME=$(echo "$COLLECTION_NAME" | sed -e 's|collections/||' -e 's/ /_/g' -e 's/,//g' -e 's/\./_/g')

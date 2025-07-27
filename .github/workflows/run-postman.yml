@@ -6,26 +6,74 @@ on:
       - master
 
 jobs:
-  run_postman:
+  collection1:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'  # or any stable version
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-    - name: Install Newman
-      run: npm install -g newman
+      - name: Install Newman
+        run: npm install -g newman
 
-    - name: Run Collection 1
-      run: newman run path/to/collection1.json
+      - name: Run Collection 1
+        run: |
+          newman run collections/collection1.json -r json,json-summary,html --reporter-json-export=reports/collection1-report.json --reporter-html-export=reports/collection1-report.html
 
-    - name: Run Collection 2
-      run: newman run path/to/collection2.json
+      - name: Upload Collection 1 Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: collection1-reports
+          path: reports/
 
-    - name: Run Collection 3
-      run: newman run path/to/collection3.json
+  collection2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Collection 2
+        run: |
+          newman run collections/collection2.json -r json,json-summary,html --reporter-json-export=reports/collection2-report.json --reporter-html-export=reports/collection2-report.html
+
+      - name: Upload Collection 2 Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: collection2-reports
+          path: reports/
+
+  collection3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Collection 3
+        run: |
+          newman run collections/collection3.json -r json,json-summary,html --reporter-json-export=reports/collection3-report.json --reporter-html-export=reports/collection3-report.html
+
+      - name: Upload Collection 3 Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: collection3-reports
+          path: reports/

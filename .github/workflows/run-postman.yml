@@ -12,9 +12,9 @@ jobs:
     strategy:
       matrix:
         collection-file:
-          - "collections/End-to-End Tests.postman_collection.json"
-          - "collections/Integration testing basics.postman_collection.json"
-          - "collections/REST API basics- CRUD, test & variable.postman_collection.json"
+          - "End-to-End Tests.postman_collection.json"
+          - "Integration testing basics.postman_collection.json"
+          - "REST API basics- CRUD, test & variable.postman_collection.json"
 
     steps:
       - name: Checkout repository
@@ -31,17 +31,17 @@ jobs:
             newman-reporter-html \
             newman-reporter-json-summary
 
-      - name: Debug - List collections folder contents
+      - name: Debug - List root folder contents
         run: |
-          echo "Listing contents of collections/"
-          ls -l collections/
+          echo "Listing contents of project root"
+          ls -l
 
       - name: Run Postman collection
         run: |
           mkdir -p reports
           COLLECTION_NAME="${{ matrix.collection-file }}"
           # Sanitize filename for report outputs
-          REPORT_NAME=$(echo "$COLLECTION_NAME" | sed -e 's|collections/||' -e 's/ /_/g' -e 's/,//g' -e 's/&//g' -e 's/\./_/g')
+          REPORT_NAME=$(echo "$COLLECTION_NAME" | sed -e 's/ /_/g' -e 's/,//g' -e 's/&//g' -e 's/\./_/g')
           echo "Running Newman on: $COLLECTION_NAME"
           newman run "$COLLECTION_NAME" \
             -r json,json-summary,html \

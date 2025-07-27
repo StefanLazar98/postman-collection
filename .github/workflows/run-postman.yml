@@ -12,13 +12,13 @@ jobs:
     strategy:
       matrix:
         collection-file:
-          - "postman-collection/End-to-End Tests.postman_collection.json"
-          - "postman-collection/Integration testing basics.postman_collection.json"
-          - "postman-collection/REST API basics- CRUD, test & variable.postman_collection.json"
+          - "End-to-End Tests.postman_collection.json"
+          - "Integration testing basics.postman_collection.json"
+          - "REST API basics- CRUD, test & variable.postman_collection.json"
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,10 +31,11 @@ jobs:
       - name: Run Postman collection
         run: |
           mkdir -p reports
+          cd postman-collection-master
           COLLECTION_NAME="${{ matrix.collection-file }}"
           # Sanitize filename for report outputs (replace spaces, commas, dots)
           REPORT_NAME=$(echo "$COLLECTION_NAME" | sed -e 's|collections/||' -e 's/ /_/g' -e 's/,//g' -e 's/\./_/g')
-          newman run "$COLLECTION_NAME" \
+          newman run '.\"$COLLECTION_NAME"' \
             -r json,json-summary,html \
             --reporter-json-export="reports/${REPORT_NAME}-report.json" \
             --reporter-html-export="reports/${REPORT_NAME}-report.html"

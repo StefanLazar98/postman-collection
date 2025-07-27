@@ -34,7 +34,7 @@ jobs:
           COLLECTION_NAME="${{ matrix.collection-file }}"
           # Sanitize filename for report outputs (replace spaces, commas, dots)
           REPORT_NAME=$(echo "$COLLECTION_NAME" | sed -e 's|collections/||' -e 's/ /_/g' -e 's/,//g' -e 's/\./_/g')
-          newman run '.\"$COLLECTION_NAME"' \
+          newman run "$COLLECTION_NAME" \
             -r json,json-summary,html \
             --reporter-json-export="reports/${REPORT_NAME}-report.json" \
             --reporter-html-export="reports/${REPORT_NAME}-report.html"

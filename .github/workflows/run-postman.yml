@@ -22,7 +22,7 @@ jobs:
 
       - name: Run Collection 1
         run: |
-          newman run collections/collection1.json -r json,json-summary,html --reporter-json-export=reports/collection1-report.json --reporter-html-export=reports/collection1-report.html
+          newman run postman-collection/End-to-End Tests.postman_collection.json -r json,json-summary,html --reporter-json-export=reports/collection1-report.json --reporter-html-export=reports/collection1-report.html
 
       - name: Upload Collection 1 Reports
         uses: actions/upload-artifact@v4
@@ -46,7 +46,7 @@ jobs:
 
       - name: Run Collection 2
         run: |
-          newman run collections/collection2.json -r json,json-summary,html --reporter-json-export=reports/collection2-report.json --reporter-html-export=reports/collection2-report.html
+          newman run postman-collection/Integration testing basics.postman_collection.json -r json,json-summary,html --reporter-json-export=reports/collection2-report.json --reporter-html-export=reports/collection2-report.html
 
       - name: Upload Collection 2 Reports
         uses: actions/upload-artifact@v4
@@ -70,7 +70,7 @@ jobs:
 
       - name: Run Collection 3
         run: |
-          newman run collections/collection3.json -r json,json-summary,html --reporter-json-export=reports/collection3-report.json --reporter-html-export=reports/collection3-report.html
+          newman run postman-collection/REST API basics- CRUD, test & variable.postman_collection.json -r json,json-summary,html --reporter-json-export=reports/collection3-report.json --reporter-html-export=reports/collection3-report.html
 
       - name: Upload Collection 3 Reports
         uses: actions/upload-artifact@v4

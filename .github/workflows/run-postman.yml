@@ -6,74 +6,23 @@ on:
       - master
 
 jobs:
-  collection1:
+  run-collections:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        collection: ["collection1.json", "collection2.json", "collection3.json"]
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install Newman
-        run: npm install -g newman
-
-      - name: Run Collection 1
+      - name: Install Node.js and Newman
         run: |
-          newman run postman-collection/End-to-End Tests.postman_collection.json -r json,json-summary,html --reporter-json-export=reports/collection1-report.json --reporter-html-export=reports/collection1-report.html
+          curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          npm install -g newman
 
-      - name: Upload Collection 1 Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: collection1-reports
-          path: reports/
-
-  collection2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install Newman
-        run: npm install -g newman
-
-      - name: Run Collection 2
+      - name: Run Postman Collection
         run: |
-          newman run postman-collection/Integration testing basics.postman_collection.json -r json,json-summary,html --reporter-json-export=reports/collection2-report.json --reporter-html-export=reports/collection2-report.html
-
-      - name: Upload Collection 2 Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: collection2-reports
-          path: reports/
-
-  collection3:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install Newman
-        run: npm install -g newman
-
-      - name: Run Collection 3
-        run: |
-          newman run postman-collection/REST API basics- CRUD, test & variable.postman_collection.json -r json,json-summary,html --reporter-json-export=reports/collection3-report.json --reporter-html-export=reports/collection3-report.html
-
-      - name: Upload Collection 3 Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: collection3-reports
-          path: reports/
+          newman run ${{ matrix.collection }} -r json,json-summary,html \
+            --reporter-json-export=reports/${{ matrix.collection }}-report.json \
+            --reporter-html-export=reports/${{ matrix.collection }}-report.html

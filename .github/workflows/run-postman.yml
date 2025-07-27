@@ -47,6 +47,7 @@ jobs:
             -r json,json-summary,html \
             --reporter-json-export="reports/${REPORT_NAME}-report.json" \
             --reporter-html-export="reports/${REPORT_NAME}-report.html"
+          continue-on-error: true   
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4

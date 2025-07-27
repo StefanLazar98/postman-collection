@@ -12,9 +12,9 @@ jobs:
     strategy:
       matrix:
         collection-file:
-          - "collections/End-to-End Tests.postman_collection.json"
-          - "collections/Integration testing basics.postman_collection.json"
-          - "collections/REST API basics- CRUD, test & variable.postman_collection.json"
+          - "postman-collection/End-to-End Tests.postman_collection.json"
+          - "postman-collection/Integration testing basics.postman_collection.json"
+          - "postman-collection/REST API basics- CRUD, test & variable.postman_collection.json"
 
     steps:
       - name: Checkout repository
